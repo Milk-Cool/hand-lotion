@@ -4,6 +4,7 @@ import mediapipe as mp
 lm = mp.solutions.hands.HandLandmark
 
 X_ACCURACY = 0.2
+MIN_WIDTH = 0.2
 
 def is_thumbs_somewhere(gesture):
     finger1 = get_vector(gesture, lm.INDEX_FINGER_PIP, lm.INDEX_FINGER_DIP)
@@ -34,6 +35,10 @@ def is_thumbs_somewhere(gesture):
             and abs(gesture[lm.PINKY_DIP].x - gesture[lm.PINKY_TIP].x) < X_ACCURACY
         )
     )
+    ok_vis = math.hypot(
+        abs(gesture[lm.PINKY_MCP].x - gesture[lm.INDEX_FINGER_MCP].x),
+        abs(gesture[lm.PINKY_MCP].y - gesture[lm.INDEX_FINGER_MCP].y)
+    ) > MIN_WIDTH
 
-    return ok_ang and ok_fing
+    return ok_ang and ok_fing and ok_vis
     
