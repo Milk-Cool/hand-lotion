@@ -76,6 +76,12 @@ class GesturesController:
                     self.last_gesture_time = ctime
                     return self.E_PAUSE
                 return self.E_NONE
+            if gesture_is_mute(*args):
+                if self.last_gesture != self.G_MUTE:
+                    self.last_gesture = self.G_MUTE
+                    self.last_gesture_time = ctime
+                    return self.E_MUTE
+                return self.E_NONE
             if gesture_is_up(*args):
                 if ctime - self.last_gesture_time > self.WAIT_TIME:
                     self.last_gesture = self.G_UP
