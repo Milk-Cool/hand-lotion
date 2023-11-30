@@ -33,6 +33,10 @@ class GesturesController:
         # Time to ignore festures for after one was recognized
         self.IGNORE_TIME = 0.3
 
+        # Time to wait for with repeating gestures (volume up, volume down)
+        # Must be greater than IGNORE_TIME
+        self.WAIT_TIME = 0.5
+
         self.last_gesture = self.G_NONE
         self.last_gesture_time = -100
         self.last_gesture_x = -1
@@ -71,6 +75,18 @@ class GesturesController:
                     self.last_gesture = self.G_PAUSE
                     self.last_gesture_time = ctime
                     return self.E_PAUSE
+                return self.E_NONE
+            if gesture_is_up(*args):
+                if ctime - self.last_gesture_time > self.WAIT_TIME:
+                    self.last_gesture = self.G_UP
+                    self.last_gesture_time = ctime
+                    return self.E_UP
+                return self.E_NONE
+            if gesture_is_down(*args):
+                if ctime - self.last_gesture_time > self.WAIT_TIME:
+                    self.last_gesture = self.G_DOWN
+                    self.last_gesture_time = ctime
+                    return self.E_DOWN
                 return self.E_NONE
             self.last_gesture = self.G_NONE
         
