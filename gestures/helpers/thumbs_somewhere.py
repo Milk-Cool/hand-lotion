@@ -1,3 +1,4 @@
+from gestures.helpers.length import *
 from gestures.helpers.vector import *
 import mediapipe as mp
 
@@ -52,6 +53,7 @@ def is_thumbs_somewhere(gesture):
         abs(gesture[lm.PINKY_MCP].x - gesture[lm.INDEX_FINGER_MCP].x),
         abs(gesture[lm.PINKY_MCP].y - gesture[lm.INDEX_FINGER_MCP].y)
     ) > MIN_WIDTH
+    ok_len = is_length_normal_max(finger1, finger2, finger3, finger4, 0.1)
 
-    return ok_ang and ok_fing and ok_vis
+    return ok_ang and ok_fing and ok_vis and ok_len
     

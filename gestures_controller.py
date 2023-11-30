@@ -5,9 +5,8 @@ import time
 
 from gestures.down import gesture_is_down
 from gestures.mute import gesture_is_mute
-from gestures.next import gesture_is_next
+from gestures.sideways import gesture_is_sideways
 from gestures.pause import gesture_is_pause
-from gestures.prev import gesture_is_prev
 from gestures.up import gesture_is_up
 
 class GesturesController:
@@ -16,10 +15,9 @@ class GesturesController:
         self.G_NONE = -1
         self.G_DOWN = 0
         self.G_MUTE = 1
-        self.G_NEXT = 2
+        self.G_SIDE = 2
         self.G_PAUSE = 3
-        self.G_PREV = 4
-        self.G_UP = 5
+        self.G_UP = 4
 
         # Events
         self.E_NONE = -1
@@ -35,7 +33,7 @@ class GesturesController:
 
         # Time to wait for with repeating gestures (volume up, volume down)
         # Must be greater than IGNORE_TIME
-        self.WAIT_TIME = 0.5
+        self.WAIT_TIME = 0.25
 
         self.last_gesture = self.G_NONE
         self.last_gesture_time = -100
@@ -81,6 +79,12 @@ class GesturesController:
                     self.last_gesture = self.G_MUTE
                     self.last_gesture_time = ctime
                     return self.E_MUTE
+                return self.E_NONE
+            if gesture_is_sideways(*args):
+                if self.last_gesture != self.G_SIDE:
+                    self.last_gesture = self.G_SIDE
+                    self.last_gesture_time = ctime
+                    return self.E_PREV
                 return self.E_NONE
             if gesture_is_up(*args):
                 if ctime - self.last_gesture_time > self.WAIT_TIME:

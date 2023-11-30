@@ -6,7 +6,7 @@ import mediapipe as mp
 
 lm = mp.solutions.hands.HandLandmark
 
-MIN_WIDTH = 0.1
+MIN_WIDTH = 0.2
 
 def gesture_is_pause(gesture, multi_handedness_label):
     finger1 = get_vector(gesture, lm.INDEX_FINGER_MCP, lm.INDEX_FINGER_TIP)
@@ -24,4 +24,4 @@ def gesture_is_pause(gesture, multi_handedness_label):
     ok_width = math.hypot(abs(gesture[lm.PINKY_MCP].x - gesture[lm.INDEX_FINGER_MCP].x),
         abs(gesture[lm.PINKY_MCP].y - gesture[lm.INDEX_FINGER_MCP].y)) > MIN_WIDTH
 
-    return ok_ang and ok_orient and is_length_normal(finger1, finger2, finger3, finger4) and ok_width
+    return ok_ang and ok_orient and is_length_normal(finger1, finger2, finger3, finger4, 0.2) and ok_width
