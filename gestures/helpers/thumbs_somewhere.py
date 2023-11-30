@@ -34,6 +34,19 @@ def is_thumbs_somewhere(gesture):
             abs(gesture[lm.PINKY_MCP].x - gesture[lm.PINKY_PIP].x) < X_ACCURACY
             and abs(gesture[lm.PINKY_DIP].x - gesture[lm.PINKY_TIP].x) < X_ACCURACY
         )
+    ) or (
+        (
+            abs(gesture[lm.INDEX_FINGER_PIP].x - gesture[lm.INDEX_FINGER_DIP].x) < X_ACCURACY
+        )
+        and (
+            abs(gesture[lm.MIDDLE_FINGER_PIP].x - gesture[lm.MIDDLE_FINGER_DIP].x) < X_ACCURACY
+        )
+        and (
+            abs(gesture[lm.RING_FINGER_PIP].x - gesture[lm.RING_FINGER_DIP].x) < X_ACCURACY
+        )
+        and (
+            abs(gesture[lm.PINKY_PIP].x - gesture[lm.PINKY_DIP].x) < X_ACCURACY
+        )
     )
     ok_vis = math.hypot(
         abs(gesture[lm.PINKY_MCP].x - gesture[lm.INDEX_FINGER_MCP].x),
