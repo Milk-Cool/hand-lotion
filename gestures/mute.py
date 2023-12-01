@@ -1,6 +1,5 @@
 # ✌️
 
-import mediapipe as mp
 from gestures.helpers.thumbs_somewhere import *
 
 def gesture_is_mute(gesture, multi_handedness_label):
