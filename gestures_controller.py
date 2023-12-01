@@ -16,9 +16,10 @@ class GesturesController:
         self.G_NONE = -1
         self.G_DOWN = 0
         self.G_MUTE = 1
-        self.G_SIDE = 2
-        self.G_PAUSE = 3
-        self.G_UP = 4
+        self.G_NEXT = 2
+        self.G_PREV = 3
+        self.G_PAUSE = 4
+        self.G_UP = 5
 
         # Events
         self.E_NONE = -1
@@ -84,6 +85,18 @@ class GesturesController:
                     self.last_gesture = self.G_MUTE
                     self.last_gesture_time = ctime
                     return self.E_MUTE
+                return self.E_NONE
+            if gesture_is_next(*args):
+                if self.last_gesture != self.G_NEXT:
+                    self.last_gesture = self.G_NEXT
+                    self.last_gesture_time = ctime
+                    return self.E_NEXT
+                return self.E_NONE
+            if gesture_is_prev(*args):
+                if self.last_gesture != self.G_PREV:
+                    self.last_gesture = self.G_PREV
+                    self.last_gesture_time = ctime
+                    return self.E_PREV
                 return self.E_NONE
             if gesture_is_up(*args):
                 if ctime - self.last_gesture_time > self.WAIT_TIME:

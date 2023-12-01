@@ -1,10 +1,10 @@
 from gestures.helpers.length import *
 from gestures.helpers.vector import *
+from gestures.helpers.finger_folded import four_fingers_folded
 import mediapipe as mp
 
 lm = mp.solutions.hands.HandLandmark
 
-X_ACCURACY = 0.2
 MIN_WIDTH = 0.2
 MAX_FING_LENGTH = 0.15
 
@@ -19,42 +19,11 @@ def is_thumbs_somewhere(gesture):
         and is_small_angle(finger2, finger3)
         and is_small_angle(finger3, finger4)
     )
-    ok_fing = (
-        (
-            abs(gesture[lm.INDEX_FINGER_MCP].x - gesture[lm.INDEX_FINGER_PIP].x) < X_ACCURACY
-            and abs(gesture[lm.INDEX_FINGER_DIP].x - gesture[lm.INDEX_FINGER_TIP].x) < X_ACCURACY
-        )
-        and (
-            abs(gesture[lm.MIDDLE_FINGER_MCP].x - gesture[lm.MIDDLE_FINGER_PIP].x) < X_ACCURACY
-            and abs(gesture[lm.MIDDLE_FINGER_DIP].x - gesture[lm.MIDDLE_FINGER_TIP].x) < X_ACCURACY
-        )
-        and (
-            abs(gesture[lm.RING_FINGER_MCP].x - gesture[lm.RING_FINGER_PIP].x) < X_ACCURACY
-            and abs(gesture[lm.RING_FINGER_DIP].x - gesture[lm.RING_FINGER_TIP].x) < X_ACCURACY
-        )
-        and (
-            abs(gesture[lm.PINKY_MCP].x - gesture[lm.PINKY_PIP].x) < X_ACCURACY
-            and abs(gesture[lm.PINKY_DIP].x - gesture[lm.PINKY_TIP].x) < X_ACCURACY
-        )
-    ) or (
-        (
-            abs(gesture[lm.INDEX_FINGER_PIP].x - gesture[lm.INDEX_FINGER_DIP].x) < X_ACCURACY
-        )
-        and (
-            abs(gesture[lm.MIDDLE_FINGER_PIP].x - gesture[lm.MIDDLE_FINGER_DIP].x) < X_ACCURACY
-        )
-        and (
-            abs(gesture[lm.RING_FINGER_PIP].x - gesture[lm.RING_FINGER_DIP].x) < X_ACCURACY
-        )
-        and (
-            abs(gesture[lm.PINKY_PIP].x - gesture[lm.PINKY_DIP].x) < X_ACCURACY
-        )
-    )
     ok_vis = math.hypot(
         abs(gesture[lm.PINKY_MCP].x - gesture[lm.INDEX_FINGER_MCP].x),
         abs(gesture[lm.PINKY_MCP].y - gesture[lm.INDEX_FINGER_MCP].y)
     ) > MIN_WIDTH
     ok_len = is_length_normal_max(finger1, finger2, finger3, finger4, MAX_FING_LENGTH)
 
-    return ok_ang and ok_fing and ok_vis and ok_len
+    return ok_ang and four_fingers_folded(gesture) and ok_vis and ok_len
     
