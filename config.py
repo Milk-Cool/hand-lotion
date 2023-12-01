@@ -7,6 +7,11 @@ IGNORE_TIME = 0.2
 # Must be greater than IGNORE_TIME
 WAIT_TIME = 0.25
 
+# Debug mode
+# Prints out the keys it's pressing
+# Either True or False
+DEBUG = True
+
 # Change these only if you know what you're doing!
 FOLD_X_ACCURACY = 0.2
 FOLD_MIN_LENGTH = 0.2

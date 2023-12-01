@@ -1,4 +1,5 @@
 from pynput.keyboard import Key, Controller
+import config
 
 class MediaController:
     def __init__(self):
@@ -6,7 +7,8 @@ class MediaController:
 
     def press(self, key):
         self.controller.tap(key)
-        print(key)
+        if config.DEBUG:
+            print(key)
     
     def mute(self):
         self.press(Key.media_volume_mute)
