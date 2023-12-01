@@ -1,11 +1,12 @@
 from gestures.helpers.vector import *
 from gestures.helpers.length import *
 import mediapipe as mp
+import config
 
 lm = mp.solutions.hands.HandLandmark
 
-X_ACCURACY = 0.2
-MIN_LENGTH = 0.2
+X_ACCURACY = config.FOLD_X_ACCURACY
+MIN_LENGTH = config.FOLD_MIN_LENGTH
 
 # TODO: remove code duplication
 def four_fingers_folded(gesture):

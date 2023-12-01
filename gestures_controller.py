@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import time
+import config
 
 from gestures.down import gesture_is_down
 from gestures.mute import gesture_is_mute
@@ -31,15 +32,11 @@ class GesturesController:
         self.E_UP = 5
 
         # Time to ignore festures for after one was recognized
-        self.IGNORE_TIME = 0.3
+        self.IGNORE_TIME = config.IGNORE_TIME
 
         # Time to wait for with repeating gestures (volume up, volume down)
         # Must be greater than IGNORE_TIME
-        self.WAIT_TIME = 0.25
-
-        # Distance between frames for the hand to travel
-        # to skip a song
-        self.SKIP_DIST = 0.2
+        self.WAIT_TIME = config.WAIT_TIME
 
         self.last_gesture = self.G_NONE
         self.last_gesture_time = -100

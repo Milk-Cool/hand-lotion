@@ -3,10 +3,11 @@
 from gestures.helpers.vector import *
 from gestures.helpers.length import *
 import mediapipe as mp
+import config
 
 lm = mp.solutions.hands.HandLandmark
 
-MIN_WIDTH = 0.2
+MIN_WIDTH = config.PAUSE_MIN_WIDTH
 
 def gesture_is_pause(gesture, multi_handedness_label):
     finger1 = get_vector(gesture, lm.INDEX_FINGER_MCP, lm.INDEX_FINGER_TIP)

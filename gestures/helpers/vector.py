@@ -1,9 +1,10 @@
 import numpy as np
 import math
+import config
 
-SMALL_ANGLE = 15
-VERY_BIG_ANGLE = 140
-# Everything in between is a "big angle"
+SMALL_ANGLE = config.V_SMALL_ANGLE
+VERY_BIG_ANGLE = config.V_VERY_BIG_ANGLE
+# Everything in between is just a "big angle"
 
 def get_norm_vector(vector):
 	return vector / np.linalg.norm(vector)

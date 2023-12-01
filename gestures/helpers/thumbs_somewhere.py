@@ -2,11 +2,12 @@ from gestures.helpers.length import *
 from gestures.helpers.vector import *
 from gestures.helpers.finger_folded import four_fingers_folded
 import mediapipe as mp
+import config
 
 lm = mp.solutions.hands.HandLandmark
 
-MIN_WIDTH = 0.2
-MAX_FING_LENGTH = 0.15
+MIN_WIDTH = config.THUMBS_MIN_WIDTH
+MAX_FING_LENGTH = config.THUMBS_MAX_FING_LENGTH
 
 def is_thumbs_somewhere(gesture):
     finger1 = get_vector(gesture, lm.INDEX_FINGER_PIP, lm.INDEX_FINGER_DIP)
