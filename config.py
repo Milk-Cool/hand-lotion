@@ -13,7 +13,7 @@ WAIT_TIME = 0.25
 DEBUG = True
 
 # Change these only if you know what you're doing!
-FOLD_X_ACCURACY = 0.1
+FOLD_X_ACCURACY = 0.15
 FOLD_MIN_LENGTH = 0.2
 THUMBS_MIN_WIDTH = 0.2
 THUMBS_MAX_FING_LENGTH = 0.15
