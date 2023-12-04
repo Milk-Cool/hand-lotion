@@ -9,6 +9,7 @@ lm = mp.solutions.hands.HandLandmark
 MIN_WIDTH = config.THUMBS_MIN_WIDTH
 MAX_FING_LENGTH = config.THUMBS_MAX_FING_LENGTH
 
+
 def is_thumbs_somewhere(gesture):
     finger1 = get_vector(gesture, lm.INDEX_FINGER_PIP, lm.INDEX_FINGER_DIP)
     finger2 = get_vector(gesture, lm.MIDDLE_FINGER_PIP, lm.MIDDLE_FINGER_DIP)
@@ -24,7 +25,7 @@ def is_thumbs_somewhere(gesture):
         abs(gesture[lm.PINKY_MCP].x - gesture[lm.INDEX_FINGER_MCP].x),
         abs(gesture[lm.PINKY_MCP].y - gesture[lm.INDEX_FINGER_MCP].y)
     ) > MIN_WIDTH
-    ok_len = is_length_normal_max(finger1, finger2, finger3, finger4, MAX_FING_LENGTH)
+    ok_len = is_length_normal_max(
+        finger1, finger2, finger3, finger4, MAX_FING_LENGTH)
 
     return ok_ang and four_fingers_folded(gesture) and ok_vis and ok_len
-    

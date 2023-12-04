@@ -5,6 +5,7 @@ from gestures.helpers.thumbs_somewhere import is_thumbs_somewhere
 
 lm = mp.solutions.hands.HandLandmark
 
+
 def gesture_is_down(gesture, multi_handedness_label):
     ok_thumb = gesture[lm.THUMB_TIP].y > gesture[lm.WRIST].y
 

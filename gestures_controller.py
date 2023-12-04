@@ -11,6 +11,7 @@ from gestures.prev import gesture_is_prev
 from gestures.pause import gesture_is_pause
 from gestures.up import gesture_is_up
 
+
 class GesturesController:
     def __init__(self):
         # Gestures
@@ -44,7 +45,7 @@ class GesturesController:
 
         self.detector = mp.solutions.hands.Hands()
         self.cap = cv2.VideoCapture(0)
-    
+
     def get_camera_image(self):
         ret, frame = self.cap.read()
         if not ret:
@@ -52,7 +53,7 @@ class GesturesController:
         frame = np.fliplr(frame)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         return frame
-    
+
     def get_hands(self, img):
         return self.detector.process(img)
 
@@ -63,14 +64,15 @@ class GesturesController:
         hands = self.get_camera_hands()
         if hands.multi_hand_landmarks is None:
             return
-        
+
         ctime = time.time()
 
         if ctime - self.last_gesture_time < self.IGNORE_TIME:
             return self.E_NONE
 
         for i in range(len(hands.multi_hand_landmarks)):
-            args = [hands.multi_hand_landmarks[i].landmark, hands.multi_handedness[i].classification[0].label]
+            args = [hands.multi_hand_landmarks[i].landmark,
+                    hands.multi_handedness[i].classification[0].label]
             if gesture_is_pause(*args):
                 if self.last_gesture != self.G_PAUSE:
                     self.last_gesture = self.G_PAUSE
@@ -108,5 +110,5 @@ class GesturesController:
                     return self.E_DOWN
                 return self.E_NONE
             self.last_gesture = self.G_NONE
-        
+
         return self.E_NONE
