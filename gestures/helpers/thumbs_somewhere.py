@@ -11,20 +11,24 @@ MAX_FING_LENGTH = config.THUMBS_MAX_FING_LENGTH
 
 
 def is_thumbs_somewhere(gesture):
+    # Four fingers
     finger1 = get_vector(gesture, lm.INDEX_FINGER_PIP, lm.INDEX_FINGER_DIP)
     finger2 = get_vector(gesture, lm.MIDDLE_FINGER_PIP, lm.MIDDLE_FINGER_DIP)
     finger3 = get_vector(gesture, lm.RING_FINGER_PIP, lm.RING_FINGER_DIP)
     finger4 = get_vector(gesture, lm.PINKY_PIP, lm.PINKY_DIP)
 
     ok_ang = (
+        # Fingers are parallel to each other
         is_small_angle(finger1, finger2)
         and is_small_angle(finger2, finger3)
         and is_small_angle(finger3, finger4)
     )
+    # Pinky visible
     ok_vis = math.hypot(
         abs(gesture[lm.PINKY_MCP].x - gesture[lm.INDEX_FINGER_MCP].x),
         abs(gesture[lm.PINKY_MCP].y - gesture[lm.INDEX_FINGER_MCP].y)
     ) > MIN_WIDTH
+    # Palm is horizontal
     ok_len = is_length_normal_max(
         finger1, finger2, finger3, finger4, MAX_FING_LENGTH)
 

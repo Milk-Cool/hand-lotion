@@ -9,6 +9,7 @@ def gesture_is_mute(gesture, multi_handedness_label):
     finger3 = get_vector(gesture, lm.RING_FINGER_PIP, lm.RING_FINGER_DIP)
     finger4 = get_vector(gesture, lm.PINKY_PIP, lm.PINKY_DIP)
 
+    # Recognizing a "peace" sign here
     ok_peace = get_angle_deg(finger1, finger2) > 10
     ok_rest_closed = is_very_big_angle(
         finger2, finger3) and is_small_angle(finger3, finger4)
