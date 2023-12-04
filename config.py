@@ -10,7 +10,7 @@ WAIT_TIME = 0.25
 # Debug mode
 # Prints out the keys it's pressing
 # Either True or False
-DEBUG = True
+DEBUG = False
 
 # Change these only if you know what you're doing!
 FOLD_X_ACCURACY = 0.15
