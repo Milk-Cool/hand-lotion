@@ -27,3 +27,7 @@ For the program to recognize your gestures with the best accuracy, you should ke
 
 ## Config
 See `config.py`
+
+## Project status
+- [x] Six base gestures working
+- [ ] Testing results
