@@ -30,4 +30,4 @@ See `config.py`
 
 ## Project status
 - [x] Six base gestures working
-- [ ] Testing results
+- [x] Testing results
