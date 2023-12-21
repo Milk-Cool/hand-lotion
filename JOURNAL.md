@@ -15,3 +15,6 @@
 * Removed code duplication
 * Formatted the code to follow the pep8 standard
 * Added documentation for functions
+
+# December 21st
+* Removed even more code duplication in `gestures_controller.py`

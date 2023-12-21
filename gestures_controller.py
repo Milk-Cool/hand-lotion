@@ -46,6 +46,15 @@ class GesturesController:
         self.detector = mp.solutions.hands.Hands()
         self.cap = cv2.VideoCapture(0)
 
+        self.gestures = [
+            [gesture_is_pause, self.E_PAUSE, self.G_PAUSE, 0],
+            [gesture_is_mute, self.E_MUTE, self.G_MUTE, 0],
+            [gesture_is_next, self.E_NEXT, self.G_NEXT, 0],
+            [gesture_is_prev, self.E_PREV, self.G_PREV, 0],
+            [gesture_is_up, self.E_UP, self.G_UP, 1],
+            [gesture_is_down, self.E_DOWN, self.G_DOWN, 1]
+        ]
+
     def get_camera_image(self):
         ret, frame = self.cap.read()
         if not ret:
@@ -73,42 +82,16 @@ class GesturesController:
         for i in range(len(hands.multi_hand_landmarks)):
             args = [hands.multi_hand_landmarks[i].landmark,
                     hands.multi_handedness[i].classification[0].label]
-            if gesture_is_pause(*args):
-                if self.last_gesture != self.G_PAUSE:
-                    self.last_gesture = self.G_PAUSE
-                    self.last_gesture_time = ctime
-                    return self.E_PAUSE
-                return self.E_NONE
-            if gesture_is_mute(*args):
-                if self.last_gesture != self.G_MUTE:
-                    self.last_gesture = self.G_MUTE
-                    self.last_gesture_time = ctime
-                    return self.E_MUTE
-                return self.E_NONE
-            if gesture_is_next(*args):
-                if self.last_gesture != self.G_NEXT:
-                    self.last_gesture = self.G_NEXT
-                    self.last_gesture_time = ctime
-                    return self.E_NEXT
-                return self.E_NONE
-            if gesture_is_prev(*args):
-                if self.last_gesture != self.G_PREV:
-                    self.last_gesture = self.G_PREV
-                    self.last_gesture_time = ctime
-                    return self.E_PREV
-                return self.E_NONE
-            if gesture_is_up(*args):
-                if ctime - self.last_gesture_time > self.WAIT_TIME:
-                    self.last_gesture = self.G_UP
-                    self.last_gesture_time = ctime
-                    return self.E_UP
-                return self.E_NONE
-            if gesture_is_down(*args):
-                if ctime - self.last_gesture_time > self.WAIT_TIME:
-                    self.last_gesture = self.G_DOWN
-                    self.last_gesture_time = ctime
-                    return self.E_DOWN
-                return self.E_NONE
+            for gesture in self.gestures:
+                if gesture[0](*args):
+                    if (
+                        gesture[3] == 0 and self.last_gesture != gesture[2]
+                        or gesture[3] == 1 and self.last_gesture_time > self.WAIT_TIME
+                    ):
+                        self.last_gesture = gesture[2]
+                        self.last_gesture_time = ctime
+                        return gesture[1]
+                    return self.E_NONE
             self.last_gesture = self.G_NONE
 
         return self.E_NONE
